@@ -1,32 +1,32 @@
 import { useEffect } from "react";
 
 const WatchParty = () => {
-  // Check if we have token_hash in URL (magic link callback)
-  const params = new URLSearchParams(window.location.search);
-  const token_hash = params.get("token_hash");
-  const type = params.get("type");
-  if (token_hash) {
-    // Verify the OTP token
-    supabase.auth
-      .verifyOtp({
-        token_hash,
-        type: type || "email",
-      })
-      .then(({ error }) => {
-        if (error) {
-          setAuthError(error.message);
-        } else {
-          setAuthSuccess(true);
-          // Clear URL params
-          window.history.replaceState({}, document.title, "/");
+  
+  useEffect(() => {
+        // Check if we have token_hash in URL (magic link callback)
+        const params = new URLSearchParams(window.location.search);
+        const token_hash = params.get("token_hash");
+        const type = params.get("type");
+        if (token_hash) {
+            // Verify the OTP token
+            supabase.auth.verifyOtp({
+                token_hash,
+                type: type || "email",
+            }).then(({ error }) => {
+                if (error) {
+                    setAuthError(error.message);
+                } else {
+                    setAuthSuccess(true);
+                    // Clear URL params
+                    window.history.replaceState({}, document.title, "/");
+                }
+                setVerifying(false);
+            });
         }
-        setVerifying(false);
-      });
-  }
-  // Check for existing session using getClaims
-  supabase.auth.getClaims().then(({ data: { claims } }) => {
-    setClaims(claims);
-  });
+        // Check for existing session using getClaims
+        supabase.auth.getClaims().then(({ data: { claims } }) => {
+            setClaims(claims);
+        });
 
   return (
     <div className="w-full flex h-screen justify-center items-center p-4">
