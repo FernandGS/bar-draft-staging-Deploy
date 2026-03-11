@@ -4,7 +4,7 @@ import { supabase } from "../services/supabaseClient";
 
 type ChatMessage = {
   message: string;
-  user?: string;
+  user_name?: string;
   avatar?: string;
   timestamp: string;
 };
@@ -147,7 +147,7 @@ const WatchParty = () => {
       event: "message",
       payload: {
         message: newMessage,
-        user: session?.user?.user_metadata?.full_name,
+        user_name: session?.user?.user_metadata?.full_name,
         avatar: session?.user?.user_metadata?.avatar,
         timestamp: new Date().toISOString(),
       },
@@ -190,7 +190,11 @@ const WatchParty = () => {
           {/* Main Chat */}
           <div className="p-4 flex flex-col overflow-y-auto h-125">
             {messages.map((msg) => (
-              <p key={`${msg.timestamp}-${msg.user}`}>{msg.message}</p>
+              <div
+                className={`my-2 flex w-full items-start ${msg?.user_name == session?.user?.user_metadata?.full_name ? "justify-end" : "justify-start"}`}
+              >
+                <p key={`${msg.timestamp}-${msg.user_name}`}>{msg.message}</p>
+              </div>
             ))}
           </div>
           {/* Message Input */}
