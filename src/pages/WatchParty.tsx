@@ -164,18 +164,13 @@ const WatchParty = () => {
 
   if (!session) {
     return (
-      <div>
-        <button
-          onClick={signIn}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-        >
-          Inicia Sesión con google para unirte al watchParty
-        </button>
+      <div className="p-6 text-gray-700">
+        Inicia sesión desde la página de inicio para unirte al Watch Party.
       </div>
     );
   } else {
     return (
-      <div className="w-full flex h-screen justify-center items-center p-4">
+      <div className="w-full flex h-[calc(100vh-3rem)] justify-center items-start p-4 overflow-y-auto">
         <div className="border border-gray-700 max-w-6xl w-full min-h-150 rounded-lg">
           {/* Header */}
           <div className="flex justify-between h-20 border-b border-gray-700">
@@ -187,12 +182,6 @@ const WatchParty = () => {
                 {usersOnline.length} usuarios en línea
               </p>
             </div>
-            <button
-              onClick={signOut}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-            >
-              Cerrar Sesión
-            </button>
           </div>
           {/* Main Chat */}
           <div className="p-4 flex flex-col overflow-y-auto h-125">
