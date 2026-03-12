@@ -27,29 +27,29 @@ const MY_LNG = -100.2879801;
 const WORLD_OBJECTS: WorldObject[] = [
   {
     id: "w1",
-    label: "Tesoro",
+    label: "Balon de oro Messi",
     color: "#FFD700",
     lat: MY_LAT + 0.0001,
     lng: MY_LNG,
   },
   {
     id: "w2",
-    label: "Cristal",
-    color: "#FF4444",
+    label: "Balon de oro Messi",
+    color: "#FFD700",
     lat: MY_LAT,
     lng: MY_LNG + 0.0001,
   },
   {
     id: "w3",
-    label: "Gema",
-    color: "#44FFCC",
+    label: "Balon de oro Messi",
+    color: "#FFD700",
     lat: MY_LAT,
     lng: MY_LNG - 0.0001,
   },
   {
     id: "w4",
-    label: "Portal",
-    color: "#4488FF",
+    label: "Balon de oro Messi",
+    color: "#FFD700",
     lat: MY_LAT - 0.0001,
     lng: MY_LNG,
   },
@@ -292,7 +292,7 @@ export default function ARScene() {
       const entity = document.createElement("a-entity") as HTMLElement;
       entity.setAttribute("position", `${pos.x} ${pos.y} ${pos.z}`);
 
-      const box = document.createElement("a-box") as HTMLElement;
+      const box = document.createElement("a-sphere") as HTMLElement;
       box.setAttribute("color", obj.color);
       box.setAttribute("scale", "0.8 0.8 0.8");
       box.setAttribute("class", "clickable");
