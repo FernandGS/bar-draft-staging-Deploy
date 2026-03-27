@@ -40,3 +40,18 @@ export async function fetchFixtureEvents(fixtureId: number) : Promise<ApiRespons
     
     return handleResponse<ApiResponse>(response, "Error");
 }
+
+export async function fetchNextMatch(teamId : number) : Promise<ApiResponse> {
+
+    const url =`${base_url}/fixtures?team=${teamId}`;
+    const response = await fetch(url, {
+        headers: {
+            "x-apisports-key" : API_KEY
+        }
+    });
+
+    return handleResponse<ApiResponse>(
+        response,
+        "No se pudieron cargar los datos"
+    );
+}

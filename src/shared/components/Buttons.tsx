@@ -1,4 +1,3 @@
-// components/ui/Button.tsx
 
 interface ButtonProps {
   onClick: () => void;

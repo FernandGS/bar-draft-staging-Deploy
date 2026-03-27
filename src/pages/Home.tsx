@@ -1,5 +1,7 @@
 import Countdown from '../shared/components/Countdown'
 import { SecondaryButton } from '../shared/components/ButtonS';
+import Noticias from '../shared/components/Noticias'
+import StatCard from '../shared/components/StatCard'
 
 function Home() {
     return (
@@ -33,9 +35,21 @@ function Home() {
                     <span className="text-black">Noticias del </span>
                     <span className="text-brand-yellow">Club</span>
                 </p>
-                <div className="relative grid grid-cols-4 gap-8">
-                    
+                <div className="relative">
+                    <Noticias /> 
                 </div>
+                <div className="relative flex items-between my-20">
+                    <div className="px-75 grid grid-cols-3 justify-between gap-30">
+                        <StatCard number="2" text="Equipos" />
+                        <StatCard number="124" text="Años de Historia" />
+                        <StatCard number="400M+" text="Fans Globales" />
+                    </div>
+                </div>
+                <img src='https://www.fcbarcelona.com/fcbarcelona/photo/2024/03/13/13a9d23d-c41b-4bf1-b6a8-ab5a4dfc3f3c/FCB_Oporto-035.jpg' />
+               <div className="relative flex justify-center my-10">
+                <h1 className="text-[54px] font-light text-brand-crimson">Més Que Un Club</h1>
+               </div>
+
             </div>
         </>
     ) 
