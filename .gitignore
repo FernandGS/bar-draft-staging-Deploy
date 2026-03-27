@@ -28,4 +28,3 @@ dist-ssr
 server/node_modules/
 server/.env
 .env.local
-.env.example

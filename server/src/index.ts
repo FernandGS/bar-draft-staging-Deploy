@@ -15,6 +15,18 @@ const app = new Hono()
 
 app.use('*', cors())
 
+// Devuelve usuarios directo de la BD, es para el recuadro debajo del chat
+app.get('/api/usuarios', async (c) => {
+  try {
+    const data = await (dbTools.getUsuarios.execute as any)({ limit: 3 })
+    return c.json({ usuarios: data })
+  } catch (err) {
+    console.error('Error en /api/usuarios:', err)
+    return c.json({ error: String(err) }, 500)
+  }
+})
+
+// Recibe el historial de mensajes del frontend, llama al modelo (Ollama) con la herramienta getUsuarios y devuelve la respuesta en streaming
 app.post('/api/chat', async (c) => {
   try {
     const { messages } = await c.req.json()
@@ -22,13 +34,22 @@ app.post('/api/chat', async (c) => {
 
     const modelName = process.env.OLLAMA_MODEL ?? 'qwen2.5:7b'
 
+    // El modelo puede usar getUsuarios para consultar la BD y la respuesta se manda por chunks al navegador
     const result = streamText({
       model: ollama(modelName),
       system: 'Eres un asistente útil que puede consultar información de usuarios en la base de datos. Cuando el usuario pregunte sobre usuarios, usa la herramienta getUsuarios para obtener la información.',
       messages,
       tools: dbTools,
       maxSteps: 5,
-      toolChoice: { type: 'tool', toolName: 'getUsuarios' }
+      toolChoice: 'auto',
+      onError: (error) => {
+        console.error('Error del streamText:', error)
+      },
+      onFinish: ({ text, toolCalls, toolResults }) => {
+        console.log('Finalizó respuesta:', text)
+        console.log('Tool calls:', toolCalls)
+        console.log('Tool results:', toolResults)
+      }
     })
 
     result.text.then(t => console.log('Respuesta:', t))
@@ -40,6 +61,7 @@ app.post('/api/chat', async (c) => {
     return c.json({ error: String(err) }, 500)
   }
 })
+
 
 serve({
   fetch: app.fetch,

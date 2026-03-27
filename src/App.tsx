@@ -5,6 +5,8 @@ import Index from "./pages/Index"
 import Chat from "./pages/Chat"
 import WatchParty from "./pages/WatchParty";
 import Wordle from "./pages/Wordle"
+import Ra from "./pages/ra"
+import Reels from "./pages/Reels"
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <Route path="/chat" element={<Chat />} />
         <Route path="/WatchParty" element={<WatchParty />} />
         <Route path="/wordle" element={<Wordle />} />
+        <Route path="/ra" element={<Ra />} />
+        <Route path="/reels" element={<Reels />} />
       </Route>
     </Routes>
   );
