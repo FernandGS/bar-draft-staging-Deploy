@@ -31,7 +31,7 @@
 /* ── Page ─────────────────────────────────────────────────────────────────── */
 
 .wp-page {
-  background: #f1f5f9;
+  background: #002244;
   min-height: 100vh;
 }
 
@@ -279,7 +279,7 @@
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #64748b;
+  color: #94a3b8;
   margin: 0 0 16px;
 }
 
