@@ -5,9 +5,16 @@ import ChatInput from "../Components/ChatInput";
 import useWatchPartyChat from "../Hooks/ChatLogic";
 import useSession from "../Hooks/SessionLogic";
 import ScoreCard from "../Components/ScoreCard";
+import PrediccionesPopulares from "../Components/PrediccionesPopulares";
 
 const WatchParty = () => {
   const session = useSession();
+
+  const defaultPredicciones = [
+    { label: "Ganador", value: "FC Barcelona (68%)" },
+    { label: "Marcador más votado", value: "2 - 1" },
+    { label: "Primer goleador favorito", value: "Bonmati" },
+  ];
 
   // Para ver las cosas que nos trae la sesión DEBUG
   console.log(session);
@@ -35,7 +42,7 @@ const WatchParty = () => {
             location="Camp Nou"
             fansWatching={4}
           />
-          <div className="flex gap-4 w-max">
+          <div className="flex gap-4 w-full mt-4">
             <InfoCard
               label="COMPETICIÓN"
               title="UEFA Champions League"
@@ -47,9 +54,15 @@ const WatchParty = () => {
               subtitle="Barcelona, España"
             />
           </div>
+          <div className="flex gap-4 w-full mt-4 ">
+            <PrediccionesPopulares
+              title="Predicciones populares"
+              predictions={defaultPredicciones}
+            />
+          </div>
         </div>
         <div className="border border-gray-700 max-w-6xl w-130 min-h-150 rounded-lg">
-          {/* Header */}
+          {/* Chat Header */}
           <ChatHeader
             fullName={session?.user?.user_metadata?.full_name}
             usersOnline={usersOnline.length}
