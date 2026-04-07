@@ -22,6 +22,14 @@ export default defineConfig({
         target: "http://localhost:3000",
         changeOrigin: true,
       },
+      "/rss": {
+      target: "https://carpetasfcb.com",
+      changeOrigin: true,
+      },
+      "/next-game": {
+      target: "https://barca-scraper-7tag.onrender.com",
+      changeOrigin: true,
+      },
     },
   },
 });
