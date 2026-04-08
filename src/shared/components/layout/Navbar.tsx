@@ -1,21 +1,23 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSession } from "../../hooks/useSession";
 import { LoginButton } from "../Buttons";
 
 const navItems = [
   { name: "Inicio",      path: "/" },
-  { name: "Joc!",        path: "/home" },
+  { name: "Joc!",        path: "/wordle" },
   { name: "RA",          path: "/ra" },
   { name: "Reels",       path: "/reels" },
-  { name: "Watch Party", path: "/WatchParty" },
-  { name: "Tienda",      path: "/wordle" },
+  { name: "Watch Party", path: "/watchpartyhub" },
+  { name: "Tienda",      path: "/tienda" },
+  { name: "Perfil",      path: "/perfil" },
 ];
 
 const Navbar = () => {
   const session = useSession();
   const isLoggedIn = session !== null;
   const coins = 120;
+  const navigate = useNavigate();
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -49,7 +51,7 @@ const Navbar = () => {
       >
         {/* logo + links */}
         <div className="flex items-center gap-4 px-2">
-          <img src="https://upload.wikimedia.org/wikipedia/sco/4/47/FC_Barcelona_%28crest%29.svg" className="w-8 h-8" />
+          <img src="https://upload.wikimedia.org/wikipedia/sco/4/47/FC_Barcelona_%28crest%29.svg" className="w-8 h-8 hover:w-9 hover:h-9 transition-all duration-300" onClick={() => navigate("/")} />
           
           {/* links en normal */}
           <div className="hidden md:flex items-center gap-1">
@@ -73,7 +75,7 @@ const Navbar = () => {
               <span className="text-sm font-semibold">{coins} Monedas</span>
             </div>
           ) : (
-            <LoginButton onClick={() => console.log("hola")} size="sm">Iniciar Sesión</LoginButton>
+            <LoginButton onClick={() => navigate("/")} size="sm">Iniciar Sesión</LoginButton>
           )}
 
           {/* boton menu */}

@@ -1,17 +1,23 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import Countdown from '../shared/components/Countdown'
 import { PrimaryButton, SecondaryButton } from '../shared/components/Buttons';
 import Noticias from '../shared/components/Noticias'
 import StatCard from '../shared/components/StatCard'
 import InfoCard from '../shared/components/InfoCard';
+import { useSession } from "../shared/hooks/useSession"
 
 function Home() {
+    const navigate = useNavigate()
+    const session = useSession();
+    const fullName = session?.user?.user_metadata?.full_name || "";
+    const name = fullName.split(" ")[0];
     const [category, setCategory] = useState<"var" | "fem" | null>(null);
     return (
         <>
             <section className="relative bg-cover bg-center min-h-screen flex items-center justify-center text-center bg-[url('https://www.fcbarcelona.com/photo-resources/2025/11/15/43dcea0d-71dc-414f-9bcc-4e827c927693/JCAG3702.jpg?width=3200&_gl=1*1t7pif5*_gcl_aw*R0NMLjE3NzMzNDE0MTcuQ2p3S0NBand5TW5OQmhCTkVpd0EtS2NndTVneXE2dEVQNGZldjVWZmNwa2dJRGZ0clpiZGxNZTVDZGNwTXo4UkNZUnFWVmZuM19GcW5Sb0NTNGdRQXZEX0J3RQ..*_gcl_dc*R0NMLjE3NzMzNDE0MTcuQ2p3S0NBand5TW5OQmhCTkVpd0EtS2NndTVneXE2dEVQNGZldjVWZmNwa2dJRGZ0clpiZGxNZTVDZGNwTXo4UkNZUnFWVmZuM19GcW5Sb0NTNGdRQXZEX0J3RQ..*_gcl_au*OTk4NjYyNjc0LjE3NzA5MjMxMDM.')]">
                 <div className="relative py-5 mt-30 text-white">
-                    <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 font-sans tracking-tight">Benvinguts al FC Barcelona!</h2>
+                    <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 font-sans tracking-tight">{session ? `Benvingut ${name}!` : "Benvinguts al FC Barcelona!"}</h2>
                 </div>
             </section>
 
@@ -27,7 +33,7 @@ function Home() {
                             chess_queen
                         </span>
                         </div>
-                        <SecondaryButton onClick={() => console.log("hola")} size="sm">Ver más</SecondaryButton>
+                        <SecondaryButton onClick={() => navigate("/watchpartyhub")} size="sm">Ver más</SecondaryButton>
                     </div>
                     </div>
                     <div className="flex justify-center my-15">
@@ -67,7 +73,7 @@ function Home() {
                     <h1 className="text-2xl md:text-3xl lg:text-4xl font-light">Tu Historia Comienza Aquí</h1>
                     <p className="text-xs md:text-sm text-brand-gray-mid">Únete al equipo blaugrana. Participa, interactúa y disfruta de tu club, todo en un mismo lugar.</p>
                     <div className="mt-6">
-                        <PrimaryButton onClick={() => console.log("hola")} size="lg">Registrarme</PrimaryButton>
+                        <PrimaryButton onClick={() => navigate("/login")} size="lg">Registrarme</PrimaryButton>
                     </div>
                 </div>
                 <div className="relative grid grid-cols-2 gap-10 mt-30 ">
