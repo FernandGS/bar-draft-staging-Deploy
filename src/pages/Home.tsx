@@ -53,7 +53,7 @@ function Home() {
                     </div>
                 </div>
                 <img src='https://www.fcbarcelona.com/fcbarcelona/photo/2024/03/13/13a9d23d-c41b-4bf1-b6a8-ab5a4dfc3f3c/FCB_Oporto-035.jpg' className="w-full h-auto" />
-               <div className="relative flex justify-center my-10">
+               <div className="relative flex justify-center my-20">
                 <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-light text-brand-crimson">Més Que Un Club</h1>
                </div>
                <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 text-justify">
