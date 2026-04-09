@@ -1,11 +1,13 @@
 // ReelsSection.tsx
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import reels1 from "@/data/img/reels1.jpg";
 import reels2 from "@/data/img/reels2.jpg";
 import reels3 from "@/data/img/reels3.jpg";
 import reels4 from "@/data/img/reels4.jpg";
 import ReelsActionBar from "./ReelsActionBar";
-import { motion,  type Transition } from "motion/react";
+import { motion, type Transition } from "motion/react";
+import { fetchReels } from "../services/supabase";
+import type { VideoReel } from "../interfaces/VideoReel";
 
 const reels = [
   { id: 1, title: "El Barcelona gana contra Levante 3-1", thumbnail: reels1 },
@@ -22,14 +24,13 @@ const spring: Transition = {
 };
 
 const ReelsFeed = () => {
- 
   const variants = {
     center: {
       scale: 1,
       x: 0,
       opacity: 1,
       zIndex: 3,
-      width: 384,   // w-96
+      width: 384, // w-96
       height: 620,
       rotate: 0,
     },
@@ -38,8 +39,8 @@ const ReelsFeed = () => {
       x: -280,
       opacity: 0.45,
       zIndex: 2,
-      width: 224,   // w-56
-      height: 288,  // h-72
+      width: 224, // w-56
+      height: 288, // h-72
       rotate: -5,
     },
     right: {
@@ -72,29 +73,29 @@ const ReelsFeed = () => {
       rotate: 5,
     },
   };
+  // right now returns promise
 
   const [activeIndex, setActiveIndex] = useState(0);
 
   const getPosition = (i: number) => {
-    const diff = i - activeIndex
+    const diff = i - activeIndex;
     if (diff === 0) return "center";
     if (diff === 1) return "right";
     if (diff === -1) return "left";
     return "hidden";
   };
-  
 
   const getAnimateState = (i: number) => {
     const position = getPosition(i);
     if (position !== "hidden") return position;
-    const diff = i - activeIndex
+    const diff = i - activeIndex;
     return diff > activeIndex ? "hiddenRight" : "hiddenLeft";
   };
 
   type Key = "ArrowLeft" | "ArrowRight";
   const keyHandlers: Record<Key, () => void> = {
     ArrowLeft: () => setActiveIndex((i) => Math.max(i - 1, 0)),
-    ArrowRight: () => setActiveIndex((i) => Math.min(i + 1, reels.length -1))
+    ArrowRight: () => setActiveIndex((i) => Math.min(i + 1, reels.length - 1)),
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -104,6 +105,27 @@ const ReelsFeed = () => {
       keyHandlers[key]();
     }
   };
+
+  const [videos, setVideos] = useState<VideoReel[]>([]);
+
+  useEffect(() => {
+    async function fetchVids() {
+      const { data, error } = await fetchReels();
+
+      if (error) {
+        console.log(error);
+        return;
+      }
+      if (data) {
+        setVideos(data);
+      }
+    }
+    fetchVids();
+  }, []);
+
+  useEffect(() => {
+    console.log(videos)
+  }, [videos])
 
   return (
     <div
@@ -117,7 +139,7 @@ const ReelsFeed = () => {
 
         {/* Carousel */}
         <div className="relative flex items-center justify-center h-155 overflow-hidden py-14">
-          {reels.map((reel, i) => {
+          {videos.map((reel, i) => {
             const position = getPosition(i);
             const animateState = getAnimateState(i);
 
@@ -130,13 +152,12 @@ const ReelsFeed = () => {
                 className="absolute cursor-pointer overflow-hidden rounded-2xl shadow-2xl shadow-black"
                 onClick={() => setActiveIndex(i)}
               >
-              <img
-                  src={reel.thumbnail}
-                  alt={reel.title}
+                <img
+                  src={reel.thumbnail_url}
+                  alt={reel.caption}
                   className="w-full h-full object-cover"
-              />
+                />
                 <div className="absolute inset-0 bg-linear-to-t from-black/90 via-transparent to-transparent" />
-
 
                 {/* Title — fades in only for center */}
                 <motion.div
@@ -145,7 +166,7 @@ const ReelsFeed = () => {
                   transition={{ duration: 0.25 }}
                 >
                   <p className="text-white text-sm font-semibold mb-3">
-                    {reel.title}
+                    {reel.caption}
                   </p>
                 </motion.div>
               </motion.div>
@@ -154,10 +175,7 @@ const ReelsFeed = () => {
         </div>
 
         {/* Action bar animates separately below the carousel */}
-        <motion.div
-          className="flex justify-center mt-4"
-          layout
-        >
+        <motion.div className="flex justify-center mt-4" layout>
           <ReelsActionBar />
         </motion.div>
       </div>
