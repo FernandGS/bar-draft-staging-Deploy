@@ -1,6 +1,5 @@
 import { VolumeX, Volume2, Play } from "lucide-react";
 import { motion, type Transition } from "motion/react";
-import { i } from "motion/react-client";
 import { useState } from "react";
 
 const spring: Transition = {
@@ -29,8 +28,7 @@ const ReelCard = ({
   duration,
   animateState,
   position,
-  changeActiveIndex
-
+  changeActiveIndex,
 }: ReelCardProps) => {
   const variants = {
     center: {
@@ -93,49 +91,54 @@ const ReelCard = ({
       onClick={changeActiveIndex}
     >
       {/* TODO: make whole motion div clickable as the pause button*/}
-      {/* <img
-                  src={reel.thumbnail_url}
-                  alt={reel.caption}
-                  className="w-full h-full object-cover"
-                /> */}
-      <video
-        src={video_url}
-        autoPlay
-        muted
-        loop
-        playsInline
-        controls
-        controlsList="nofullscreen"
-        style={{
-          width: "100%",
-          height: "100vh",
-          objectFit: "cover",
-          outline: "none",
-        }}
-      />
-      <button
-        className="absolute top-6 left-6 cursor-pointer"
-        onClick={() => setMuted((prev) => !prev)}
-      >
-        {muted ? (
-          <VolumeX color="white" fill="white" className="w-8 h-8" />
-        ) : (
-          <Volume2 color="white" fill="white" className="w-8 h-8" />
-        )}
-      </button>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition duration-300 ">
-        <Play className="w-8 h-8 text-white fill-white" />
-      </div>
-      <div className="absolute inset-0 bg-linear-to-t from-black/90 via-transparent to-transparent pointer-events-none" />
 
-      {/* Title — fades in only for center */}
-      <motion.div
-        className="absolute bottom-0 left-0 right-0 p-4"
-        animate={{ opacity: position === "center" ? 1 : 0 }}
-        transition={{ duration: 0.25 }}
-      >
-        <p className="text-white text-sm font-semibold mb-3">{caption}</p>
-      </motion.div>
+      {position === "center" ? (
+        <div>
+          <video
+            src={video_url}
+            autoPlay
+            muted
+            loop
+            playsInline
+            controls
+            controlsList="nofullscreen"
+            style={{
+              width: "100%",
+              height: "100vh",
+              objectFit: "cover",
+              outline: "none",
+            }}
+          />
+          <button
+            className="absolute top-6 left-6 cursor-pointer"
+            onClick={() => setMuted((prev) => !prev)}
+          >
+            {muted ? (
+              <VolumeX color="white" fill="white" className="w-8 h-8" />
+            ) : (
+              <Volume2 color="white" fill="white" className="w-8 h-8" />
+            )}
+          </button>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition duration-300 ">
+            <Play className="w-8 h-8 text-white fill-white" />
+          </div>
+          <div className="absolute inset-0 bg-linear-to-t from-black/90 via-transparent to-transparent pointer-events-none" />
+
+          <motion.div
+            className="absolute bottom-0 left-0 right-0 p-4"
+            animate={{ opacity: position === "center" ? 1 : 0 }}
+            transition={{ duration: 0.25 }}
+          >
+            <p className="text-white text-sm font-semibold mb-3">{caption}</p>
+          </motion.div>
+        </div>
+      ) : (
+        <img
+          src={thumbnail_url}
+          alt={caption}
+          className="w-full h-full object-cover"
+        />
+      )}
     </motion.div>
   );
 };
