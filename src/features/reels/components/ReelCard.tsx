@@ -1,4 +1,4 @@
-import { VolumeX, Volume2, Play } from "lucide-react";
+import { VolumeX, Volume2, Play, Pause } from "lucide-react";
 import { motion, type Transition } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
@@ -84,6 +84,20 @@ const ReelCard = ({
     },
   };
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const togglePlay = () => {
+    const video = videoRef.current
+    if (!video) return;
+
+    if (video?.paused){
+        video.play();
+    }
+    else{
+        video?.pause();
+    }
+    setIsPaused((prev) => !prev);
+  }
 
   useEffect(() => {
     if (videoRef.current) {
@@ -99,14 +113,18 @@ const ReelCard = ({
       variants={variants}
       animate={animateState}
       transition={spring}
-      className="absolute overflow-hidden rounded-2xl shadow-2xl shadow-black group"
-      onClick={changeActiveIndex}
+      className="absolute overflow-hidden rounded-2xl shadow-2xl shadow-black group cursor-pointer"
+      onClick={() => {
+        changeActiveIndex();
+        togglePlay();
+      }}
     >
       {/* TODO: make whole motion div clickable as the pause button*/}
 
       {position === "center" ? (
         <div>
           <video
+            ref={videoRef}
             src={video_url}
             autoPlay
             muted={muted}
@@ -135,7 +153,11 @@ const ReelCard = ({
             )}
           </button>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition duration-300 ">
-            <Play className="w-8 h-8 text-white fill-white" />
+            {isPaused ? (
+              <Play className="w-8 h-8 text-white fill-white" />
+            ) : (
+              <Pause className="w-8 h-8 text-white fill-white" />
+            )}
           </div>
           <div className="absolute inset-0 bg-linear-to-t from-black/90 via-transparent to-transparent pointer-events-none" />
 
