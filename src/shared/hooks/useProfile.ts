@@ -4,6 +4,7 @@ import { supabase } from '../services/supabaseClient'
 import  useSession  from './useSession'
 
 interface Profile {
+  nombre: string
   monedas: number
   puntos: number
   nivel: number
@@ -19,7 +20,7 @@ export function useProfile() {
     const fetchProfile = async () => {
       const { data, error } = await supabase
         .from('profiles')     
-        .select('monedas, puntos, nivel')
+        .select('monedas, puntos, nivel, nombre')
         .eq('id', session.user.id)
         .single()
 

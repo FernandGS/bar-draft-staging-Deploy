@@ -10,9 +10,8 @@ function LoggedIn() {
     const navigate = useNavigate()
     const session = useSession();
     const profile = useProfile();
-    const fullName = session?.user?.user_metadata?.full_name || "";
+    const name = profile?.nombre || session?.user?.user_metadata?.full_name.split(" ")[0];
     const progreso = profile ? (profile.puntos / 2000) * 100 : 0;
-    const name = fullName.split(" ")[0];
     const [category, setCategory] = useState<"var" | "fem" | null>(null);
     return (
         <>
@@ -24,44 +23,54 @@ function LoggedIn() {
 
             <div className="relative pt-10 px-4 md:px-8 lg:px-20">
                 <div>
-                <div className="flex items-center justify-between my-5">
-                    <div>
-                    <p className="text-2xl md:text-3xl lg:text-4xl font-sans text-black">
-                        <span className="text-black">Tu Nivel </span>
-                        <span className="text-brand-crimson">Culé</span>
-                    </p>
-                     <p className="text-sm md:text-base font-sans text-brand-navy">Nivel {profile?.nivel} de 5</p>
+                    <div className="flex items-center justify-between my-5">
+                        <div>
+                            <p className="text-2xl md:text-3xl lg:text-4xl font-sans text-black">
+                                <span className="text-black">Tu Nivel </span>
+                                <span className="text-brand-crimson">Culé</span>
+                            </p>
+                            <p className="text-sm md:text-base font-sans text-brand-navy">Nivel {profile?.nivel} de 5</p>
+                        </div>
+                        <p className="text-6xl md:text-7xl lg:text-8xl font-light text-brand-gray-mid">0{profile?.nivel}</p>
                     </div>
-                    <p className="text-6xl md:text-7xl lg:text-8xl font-light text-brand-gray-mid">0{profile?.nivel}</p>
-                </div>
 
-                <div className="my-20 mx-15">
-                <div className="w-full bg-brand-gray-light rounded-md h-5">
-                    <div className="bg-yellow-400 h-5 rounded-md" style={{ width: `${progreso}%` }}/>
-                </div>
-                </div>
+                    <div className="flex items-center justify-between my-20 mx-5">
+                        <img src="src\data\img\catLevel1.png" className="w-32" />
+                        <div>
+                        <p className="text-end px-2 pb-1 text-sm md:text-base font-sans ">{profile?.puntos} / {profile ? profile.nivel * 2000 : 0} XP </p>
+                        <div className="w-full bg-brand-gray-light rounded-md h-5">
+                            <div className="bg-yellow-400 h-5 rounded-md" style={{ width: `${progreso}%` }} />
+                        </div>
+                        <p className="pt-1 text-sm md:text-base font-sans">
+                            <span>Necesitas </span>
+                            <span className="text-brand-crimson">{profile ? 2000 - profile.puntos : 0} XP más </span>
+                            <span>para arreglar el Nivel {profile ? profile.nivel + 1 : 0}</span>
+                        </p>
+                        </div>
+                        <img src="src\data\img\catLocked.png" className="w-26" />
+                    </div>
                 </div>
 
                 <div className="flex md:flex-row items-center justify-between mb-10">
                     <p className="text-xl md:text-2xl lg:text-3xl font-sans text-black">Faltan ...</p>
                     <div className="grid grid-cols-2 gap-2 mt-4 md:mt-0">
                         <div className="grid grid-cols-2 gap-1 pt-1">
-                        <span className={`material-icons ${category === "var" ? "text-brand-crimson" : "text-brand-gray-mid"}`}>
-                            sports_soccer
-                        </span>
-                        <span className={`material-symbols-outlined ${category === "fem" ? "text-brand-crimson" : "text-brand-gray-mid"}`}>
-                            chess_queen
-                        </span>
+                            <span className={`material-icons ${category === "var" ? "text-brand-crimson" : "text-brand-gray-mid"}`}>
+                                sports_soccer
+                            </span>
+                            <span className={`material-symbols-outlined ${category === "fem" ? "text-brand-crimson" : "text-brand-gray-mid"}`}>
+                                chess_queen
+                            </span>
                         </div>
                         <SecondaryButton onClick={() => navigate("/watchpartyhub")} size="sm">Ver más</SecondaryButton>
                     </div>
-                    </div>
-                    <div className="flex justify-center my-15">
+                </div>
+                <div className="flex justify-center my-15">
                     <Countdown onCategoryLoad={setCategory} />
-                    </div>
-                    <div className="flex justify-end mt-10">
+                </div>
+                <div className="flex justify-end mt-10">
                     <p className="text-xl md:text-2xl lg:text-3xl font-sans text-black">... para vernos otra vez</p>
-                    </div>
+                </div>
                 <hr className="mt-15 border-brand-gray-light" />
                 <p className="py-10 text-sm md:text-base font-sans text-brand-navy ">Lo Último</p>
                 <p className="text-2xl md:text-3xl lg:text-4xl font-sans text-black">
@@ -69,16 +78,16 @@ function LoggedIn() {
                     <span className="text-brand-yellow">Club</span>
                 </p>
                 <div className="relative">
-                    <Noticias /> 
+                    <Noticias />
                 </div>
             </div>
-        <section className="relative h-[500px] md:h-[800px] bg-cover bg-center flex items-center mt-15 items-start justify-start text-center bg-[url('https://www.fcbarcelona.com/photo-resources/2025/05/24/7f4cd67e-658f-431a-bbc0-63ad6f52610b/_GP13348.jpg?width=2400&height=1500')]">            
-            <div className="relative text-white pt-24 pl-24 md:pt-32 md:pl-80 max-w-xl">
-                <h2 className="text-2xl sm:text-4xl md:text-4xl font-bold mb-4 font-sans tracking-tight text-left">Som Un Equip!</h2>
-            </div>
-        </section>
+            <section className="relative h-[500px] md:h-[800px] bg-cover bg-center flex items-center mt-15 items-start justify-start text-center bg-[url('https://www.fcbarcelona.com/photo-resources/2025/05/24/7f4cd67e-658f-431a-bbc0-63ad6f52610b/_GP13348.jpg?width=2400&height=1500')]">
+                <div className="relative text-white pt-24 pl-24 md:pt-32 md:pl-80 max-w-xl">
+                    <h2 className="text-2xl sm:text-4xl md:text-4xl font-bold mb-4 font-sans tracking-tight text-left">Som Un Equip!</h2>
+                </div>
+            </section>
         </>
-    ) 
+    )
 }
 
 export default LoggedIn;
