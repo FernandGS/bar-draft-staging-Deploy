@@ -1,14 +1,16 @@
 type LogroCardProps = {
-  titulo: string;
+  logro_id: number;
+  nombre: string;
   descripcion: string;
-  icono?: string;
-  desbloqueado?: boolean;
+  url_image: string;
+  desbloqueado: boolean;
 };
 
 export default function LogroCard({
-  titulo,
+  logro_id,
+  nombre,
   descripcion,
-  icono,
+  url_image,
   desbloqueado = true,
 }: LogroCardProps) {
   return (
@@ -21,19 +23,19 @@ export default function LogroCard({
     >
       {desbloqueado ?
       <img
-        src={`src/assets/Logros/${icono}.png`}
-        alt={titulo}
+        src={`src/assets/Logros/${url_image}.png`}
+        alt={nombre}
         className="w-25 h-25 mx-auto mb-2 rounded-lg"
       />
       :
       <img
         src={`src/assets/Logros/Locked.png`}
-        alt={titulo}
+        alt={nombre}
         className="w-25 h-25 mx-auto mb-2 rounded-lg"
       />
       }
 
-      <p className="text-sm font-semibold">{titulo}</p>
+      <p className="text-sm font-semibold">{nombre}</p>
       <p className="text-xs mt-1 opacity-80">{descripcion}</p>
     </div>
   );

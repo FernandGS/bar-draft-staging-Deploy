@@ -1,24 +1,18 @@
-import { useParams, Navigate } from "react-router-dom";
-import InfoCard from "../Components/InfoCard";
-import ChatHeader from "../Components/ChatHeader";
-import ChatMessageBubble from "../Components/ChatMessageBubble";
-import ChatInput from "../Components/ChatInput";
-import useWatchPartyChat from "../Hooks/ChatLogic";
-import useSession from "../Hooks/SessionLogic";
-import ScoreCard from "../Components/ScoreCard";
-import PrediccionesPopulares from "../Components/PrediccionesPopulares";
-import { useMatch } from "../Hooks/UseMatchScore";
-
-const defaultPredicciones = [
-  { label: "Ganador", value: "FC Barcelona (68%)" },
-  { label: "Marcador más votado", value: "2 - 1" },
-  { label: "Primer goleador favorito", value: "Bonmati" },
-];
+import InfoCard from "../features/WatchParty/Components/InfoCard";
+import ChatHeader from "../features/WatchParty/Components/ChatHeader";
+import ChatMessageBubble from "../features/WatchParty/Components/ChatMessageBubble";
+import ChatInput from "../features/WatchParty/Components/ChatInput";
+import useWatchPartyChat from "../features/WatchParty/Hooks/ChatLogic";
+import useSession from "../features/WatchParty/Hooks/SessionLogic";
+import ScoreCard from "../features/WatchParty/Components/ScoreCard";
+import PrediccionesPopulares from "../features/WatchParty/Components/PrediccionesPopulares";
+import { useMatch } from "../features/WatchParty/Hooks/UseMatchScore";
 
 const WatchParty = () => {
-  const { code } = useParams<{ code: string }>();
   const session = useSession();
   const { match: liveMatch, loading } = useMatch();
+
+  const defaultPredicciones: { label: string; value: string }[] = [];
 
   const matchDateLabel = liveMatch
     ? new Date(liveMatch.fixture.date).toLocaleDateString("es-ES", {
@@ -29,13 +23,17 @@ const WatchParty = () => {
       })
     : "";
 
-  const matchMinute = liveMatch?.fixture.status.elapsed ?? 0;
+  // Para ver las cosas que nos trae la sesión DEBUG
+  console.log(session);
 
-  const { messages, newMessage, setNewMessage, usersOnline, sendMessage, chatContainerRef } = useWatchPartyChat(session);
-
-
-  // Si no hay código en la URL, redirigir al hub
-  if (!code) return <Navigate to="/watchPartyHUB" replace />;
+  const {
+    messages,
+    newMessage,
+    setNewMessage,
+    usersOnline,
+    sendMessage,
+    chatContainerRef,
+  } = useWatchPartyChat(session);
 
   if (!session) {
     return (
@@ -52,11 +50,7 @@ const WatchParty = () => {
   }
 
   if (!liveMatch) {
-    return (
-      <div className="p-6 text-gray-700">
-        No hay partido disponible en este momento.
-      </div>
-    );
+    return <div className="p-6 text-gray-700">No live matches</div>;
   }
 
   return (
@@ -68,7 +62,7 @@ const WatchParty = () => {
           homeTeamScore={liveMatch.goals.home ?? 0}
           awayTeam={liveMatch.teams.away.name}
           awayTeamScore={liveMatch.goals.away ?? 0}
-          matchTime={matchMinute}
+          matchTime={liveMatch.fixture.status.elapsed ?? 0}
           location={liveMatch.fixture.venue.name ?? "Por confirmar"}
           fansWatching={usersOnline.length}
         />
@@ -91,9 +85,10 @@ const WatchParty = () => {
           />
         </div>
       </div>
-
       <div className="border border-brand-gray-light bg-brand-white max-w-6xl w-130 min-h-150 rounded-2xl overflow-hidden">
-        <ChatHeader roomCode={code} />
+        {/* Chat Header */}
+        <ChatHeader />
+        {/* Mensaje Chat */}
         <div
           ref={chatContainerRef}
           className="p-4 flex flex-col overflow-y-auto h-125 bg-brand-white"
