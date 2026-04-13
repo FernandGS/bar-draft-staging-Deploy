@@ -25,6 +25,7 @@ function App() {
         <Route path="/wordle" element={<Wordle />} />
         <Route path="/ra" element={<Ra />} />
         <Route path="/reels" element={<Reels />} />
+        <Route path="/reels/:id" element={<Reels />} />
         <Route path="/perfil" element={<Perfil />} />
       </Route>
     </Routes>

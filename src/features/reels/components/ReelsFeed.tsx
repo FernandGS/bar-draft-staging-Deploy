@@ -1,10 +1,13 @@
 // ReelsSection.tsx
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReelsActionBar from "./ReelsActionBar";
 import { motion } from "motion/react";
 import ReelCard from "./ReelCard";
 import useSession from "../../../shared/hooks/useSession";
 import { useReels } from "../hooks/useReels";
+import { useParams } from "react-router-dom";
+import type { VideoReel } from "../interfaces/VideoReel";
+import { fetchSingleVideo } from "../services/fetchSingleVideo";
 
 const ReelsFeed = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -28,7 +31,7 @@ const ReelsFeed = () => {
   type Key = "ArrowLeft" | "ArrowRight";
   const keyHandlers: Record<Key, () => void> = {
     ArrowLeft: () => setActiveIndex((i) => Math.max(i - 1, 0)),
-    ArrowRight: () => setActiveIndex((i) => Math.min(i + 1, videos.length - 1)),
+    ArrowRight: () => setActiveIndex((i) => Math.min(i + 1, reels.length - 1)),
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -39,9 +42,25 @@ const ReelsFeed = () => {
     }
   };
 
+  const { id } = useParams();
   const userId = useSession()?.user.id;
   const { videos, toggleLike, reelWatched } = useReels(userId);
-  const activeVideo = videos[activeIndex];
+  const [reels, setReels] = useState<VideoReel[]>([]);
+  const activeVideo = reels?.[activeIndex];
+
+  useEffect(() => {
+    const load = async () => {
+      if (id) {
+        const sharedVideo = await fetchSingleVideo(userId, id);
+        if (!sharedVideo) return;
+        const combined = [sharedVideo, ...videos.filter((video) => video.id !== sharedVideo.id)];
+        setReels(combined);
+      } else {
+        setReels(videos);
+      }
+    };
+    load();
+  }, [userId, videos, id]);
 
   return (
     <div
@@ -54,7 +73,7 @@ const ReelsFeed = () => {
         <h2 className="text-white text-xl font-bold mb-6 px-2">Reels</h2>
 
         <div className="relative flex items-center justify-center h-155 overflow-hidden py-14">
-          {videos.map((reel, i) => {
+          {reels.map((reel, i) => {
             const position = getPosition(i);
             const animateState = getAnimateState(i);
 

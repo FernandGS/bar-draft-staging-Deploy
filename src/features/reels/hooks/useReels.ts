@@ -67,7 +67,7 @@ export function useReels(userId: any) {
             (prev) => prev.map(v => {
               if (v.id === videoId){
                 newLike = !v.liked;
-                return {...v, newLike }
+                return {...v, liked: newLike }
               }
               return v;
             }
