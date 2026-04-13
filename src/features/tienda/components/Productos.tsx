@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import ProductoCard from "./ProductoCard";
+import PremiumWindow from "./PremiumWindow";
 import { supabase } from "../../../shared/services/supabaseClient";
+import { useSession } from "../../../shared/hooks/useSession";
 
 function mapProducto(row: Record<string, unknown>) { // Mapea los datos de la fila a la estructura esperada por ProductoCard
   const categories = row.categories as { name?: string } | null | undefined;
@@ -9,20 +11,36 @@ function mapProducto(row: Record<string, unknown>) { // Mapea los datos de la fi
     nombre: String(row.name ?? "Producto"),
     precio: Number(row.price ?? 0),
     imagen: String(row.image_url ?? ""),
-    premium_only: Boolean(row.premium_only ?? false),
-    categoria: {
-      nombre: categories?.name ?? String(row.categoria_nombre ?? "Objeto"),
-    },
+    premium: Boolean(row.premium ?? false),
+    categoria: {nombre: categories?.name ?? "Objeto"}
   };
 }
 
 const Productos = () => {
+  const session = useSession();
   const [productos, setProductos] = useState<ReturnType<typeof mapProducto>[]>([]); // El tipo de productos se infiere a partir de la función mapProducto
   const [error, setError] = useState<string | null>(null);
+  const [esPremium, setEsPremium] = useState(false);
+  const [mostrarPremium, setMostrarPremium] = useState(false);
+
+  useEffect(() => {
+    if (!session?.user?.id) return;
+    
+    const checkPremium = async () => {
+      const { data } = await supabase
+        .from("profiles")
+        .select("membership")
+        .eq("id", session.user.id)
+        .single();
+
+      setEsPremium(data?.membership === false);
+    };
+
+    void checkPremium();
+  }, [session]);
 
   useEffect(() => {
     let cancelled = false;
-
     const fetchProductos = async () => {
       const { data, error: supaError } = await supabase
         .from("products")
@@ -68,7 +86,7 @@ const Productos = () => {
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-6 px-20 pb-12">
         {productos.map((producto) => (
-          <ProductoCard key={producto.id} producto={producto} /> // Renderiza cada producto usando ProductoCard
+          <ProductoCard key={producto.id} producto={producto} esPremium={esPremium} onPremiumClick={() => setMostrarPremium(true)}/> // Renderiza cada producto usando ProductoCard
         ))}
       </div>
     </div>
