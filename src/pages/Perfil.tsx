@@ -68,7 +68,7 @@ function Perfil() {
             ranking={14}
             pais="Chile"
             avatarUrl={Usuario?.url_avatar || "https://i.pravatar.cc/150?img=3"}
-            onLogout={() => alert("Tu no mete cabra")}
+            onLogout={() => alert("Funcionalidad de cerrar sesion")}
             puntos={2400}
             logros={3}
             predicciones={4}
