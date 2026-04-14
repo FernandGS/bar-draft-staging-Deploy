@@ -7,7 +7,6 @@ import useWatchPartyChat from "../Hooks/ChatLogic";
 import useSession from "../Hooks/SessionLogic";
 import ScoreCard from "../Components/ScoreCard";
 import PrediccionesPopulares from "../Components/PrediccionesPopulares";
-import { useMatch } from "../Hooks/UseMatchScore";
 
 const defaultPredicciones = [
   { label: "Ganador", value: "FC Barcelona (68%)" },
@@ -18,23 +17,10 @@ const defaultPredicciones = [
 const WatchParty = () => {
   const { code } = useParams<{ code: string }>();
   const session = useSession();
-  const { match: liveMatch, loading } = useMatch();
 
-  const matchDateLabel = liveMatch
-    ? new Date(liveMatch.fixture.date).toLocaleDateString("es-ES", {
-        weekday: "long",
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      })
-    : "";
+  const { messages, newMessage, setNewMessage, usersOnline, sendMessage, chatContainerRef } =
+    useWatchPartyChat(session, code ?? "");
 
-  const matchMinute = liveMatch?.fixture.status.elapsed ?? 0;
-
-  const { messages, newMessage, setNewMessage, usersOnline, sendMessage, chatContainerRef } = useWatchPartyChat(session);
-
-
-  // Si no hay código en la URL, redirigir al hub
   if (!code) return <Navigate to="/watchPartyHUB" replace />;
 
   if (!session) {
@@ -45,59 +31,31 @@ const WatchParty = () => {
     );
   }
 
-  if (loading) {
-    return (
-      <div className="p-6 text-gray-700">Cargando datos del partido...</div>
-    );
-  }
-
-  if (!liveMatch) {
-    return (
-      <div className="p-6 text-gray-700">
-        No hay partido disponible en este momento.
-      </div>
-    );
-  }
-
   return (
-    <div className="w-full flex gap-4 justify-center items-start p-8 py-22 bg-brand-navy">
+    <div className="w-full flex gap-4 h-[calc(100vh-3rem)] justify-center items-start p-8 py-22 overflow-y-auto bg-brand-navy">
       <div className="w-270">
         <ScoreCard
-          date={matchDateLabel}
-          homeTeam={liveMatch.teams.home.name}
-          homeTeamScore={liveMatch.goals.home ?? 0}
-          awayTeam={liveMatch.teams.away.name}
-          awayTeamScore={liveMatch.goals.away ?? 0}
-          matchTime={matchMinute}
-          location={liveMatch.fixture.venue.name ?? "Por confirmar"}
+          date="Lunes 6 de Abril 2026"
+          homeTeam="FC Barcelona"
+          homeTeamScore={0}
+          awayTeam="Chelsea"
+          awayTeamScore={0}
+          matchTime={20}
+          location="Camp Nou"
           fansWatching={usersOnline.length}
         />
         <div className="flex gap-4 w-full mt-4">
-          <InfoCard
-            label="COMPETICIÓN"
-            title={liveMatch.league.name}
-            subtitle={liveMatch.league.round}
-          />
-          <InfoCard
-            label="ESTADIO"
-            title={liveMatch.fixture.venue.name ?? "Por confirmar"}
-            subtitle={liveMatch.fixture.venue.city ?? ""}
-          />
+          <InfoCard label="COMPETICIÓN" title="UEFA Champions League" subtitle="Jornada 26" />
+          <InfoCard label="ESTADIO" title="Camp Nou" subtitle="Barcelona, España" />
         </div>
-        <div className="flex gap-4 w-full mt-4 ">
-          <PrediccionesPopulares
-            title="Predicciones populares"
-            predictions={defaultPredicciones}
-          />
+        <div className="flex gap-4 w-full mt-4">
+          <PrediccionesPopulares title="Predicciones populares" predictions={defaultPredicciones} />
         </div>
       </div>
 
       <div className="border border-brand-gray-light bg-brand-white max-w-6xl w-130 min-h-150 rounded-2xl overflow-hidden">
         <ChatHeader roomCode={code} />
-        <div
-          ref={chatContainerRef}
-          className="p-4 flex flex-col overflow-y-auto h-125 bg-brand-white"
-        >
+        <div ref={chatContainerRef} className="p-4 flex flex-col overflow-y-auto h-125 bg-brand-white">
           {messages.map((msg) => (
             <ChatMessageBubble
               key={`${msg.timestamp}-${msg.user_name}`}
@@ -106,12 +64,7 @@ const WatchParty = () => {
             />
           ))}
         </div>
-        {/* Input Mensaje */}
-        <ChatInput
-          value={newMessage}
-          onChange={setNewMessage}
-          onSubmit={sendMessage}
-        />
+        <ChatInput value={newMessage} onChange={setNewMessage} onSubmit={sendMessage} />
       </div>
     </div>
   );

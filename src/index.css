@@ -40,7 +40,7 @@ body {
 /* ── Page ─────────────────────────────────────────────────────────────────── */
 
 .wp-page {
-  background: #f1f5f9;
+  background: #002244;
   min-height: 100vh;
 }
 
@@ -60,7 +60,7 @@ body {
 .wp-hero__backdrop {
   position: relative;
   height: 340px;
-  background: url("https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1200&q=80")
+  background: url("https://www.fcbarcelona.com/photo-resources/2026/01/24/0273c42a-e598-487b-b277-e36326c292a3/_5DS8330.jpg?width=2400&height=1500")
     center/cover no-repeat;
   display: flex;
   align-items: center;
@@ -83,7 +83,6 @@ body {
 }
 
 .wp-hero__title {
-  font-family: "Barlow Condensed", sans-serif;
   font-size: 3.2rem;
   font-weight: 800;
   color: #fff;
@@ -109,7 +108,7 @@ body {
 }
 
 .wp-hero__card-heading {
-  font-family: "Barlow Condensed", sans-serif;
+  
   font-size: 1.7rem;
   font-weight: 700;
   color: #12192c;
@@ -117,7 +116,7 @@ body {
 }
 
 .wp-hero__card-sub {
-  font-family: "DM Sans", sans-serif;
+  
   font-size: 0.88rem;
   color: #6b7280;
   margin: 0;
@@ -131,7 +130,6 @@ body {
   border: none;
   border-radius: 999px;
   padding: 13px 26px;
-  font-family: "DM Sans", sans-serif;
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
@@ -205,7 +203,6 @@ body {
   font-size: 2rem;
   color: #94a3b8;
   line-height: 1;
-  font-family: "DM Sans", sans-serif;
 }
 
 .wp-card--add:hover .wp-card__plus {
@@ -213,7 +210,6 @@ body {
 }
 
 .wp-card__badge {
-  font-family: "DM Sans", sans-serif;
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -233,7 +229,6 @@ body {
 }
 
 .wp-card__title {
-  font-family: "Barlow Condensed", sans-serif;
   font-size: 1.25rem;
   font-weight: 700;
   color: #12192c;
@@ -241,7 +236,6 @@ body {
 }
 
 .wp-card__competition {
-  font-family: "DM Sans", sans-serif;
   font-size: 0.8rem;
   color: #6b7280;
   margin: 0;
@@ -258,7 +252,6 @@ body {
   display: flex;
   align-items: center;
   gap: 7px;
-  font-family: "DM Sans", sans-serif;
   font-size: 0.85rem;
   color: #374151;
   font-weight: 500;
@@ -270,7 +263,6 @@ body {
 }
 
 .wp-card__code {
-  font-family: "DM Sans", sans-serif;
   font-size: 0.78rem;
   color: #9ca3af;
   margin: 0;
@@ -283,7 +275,7 @@ body {
 }
 
 .wp-upcoming__title {
-  font-family: "DM Sans", sans-serif;
+  
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -320,7 +312,7 @@ body {
 }
 
 .wp-code__label {
-  font-family: "DM Sans", sans-serif;
+  
   font-size: 1rem;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.9);
@@ -347,7 +339,6 @@ body {
   border: 2px solid rgba(255, 255, 255, 0.25);
   border-radius: 10px;
   text-align: center;
-  font-family: "Barlow Condensed", sans-serif;
   font-size: 1.4rem;
   font-weight: 700;
   color: #fff;
@@ -376,7 +367,6 @@ body {
   border: none;
   border-radius: 999px;
   padding: 13px 28px;
-  font-family: "DM Sans", sans-serif;
   font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
@@ -419,7 +409,6 @@ body {
 }
 
 .wp-grid__title {
-  font-family: "DM Sans", sans-serif;
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -492,7 +481,6 @@ body {
 }
 
 .wp-modal__title {
-  font-family: "Barlow Condensed", sans-serif;
   font-size: 1.6rem;
   font-weight: 700;
   color: #12192c;
@@ -500,7 +488,6 @@ body {
 }
 
 .wp-modal__sub {
-  font-family: "DM Sans", sans-serif;
   font-size: 0.85rem;
   color: #6b7280;
   margin: 0 0 24px;
@@ -508,7 +495,6 @@ body {
 
 .wp-modal__label {
   display: block;
-  font-family: "DM Sans", sans-serif;
   font-size: 0.8rem;
   font-weight: 600;
   color: #374151;
@@ -521,7 +507,6 @@ body {
   border: 1.5px solid #e5e7eb;
   border-radius: 10px;
   padding: 11px 14px;
-  font-family: "DM Sans", sans-serif;
   font-size: 0.9rem;
   color: #12192c;
   outline: none;
@@ -546,7 +531,6 @@ body {
   border-radius: 8px;
   border: 1.5px solid #e5e7eb;
   background: #fff;
-  font-family: "DM Sans", sans-serif;
   font-size: 0.88rem;
   cursor: pointer;
   color: #6b7280;
@@ -567,7 +551,6 @@ body {
   border: none;
   border-radius: 999px;
   padding: 14px;
-  font-family: "DM Sans", sans-serif;
   font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
@@ -598,7 +581,6 @@ body {
 }
 
 .wp-modal__code-display {
-  font-family: "Barlow Condensed", sans-serif;
   font-size: 2.2rem;
   font-weight: 800;
   letter-spacing: 0.15em;
@@ -633,27 +615,24 @@ body {
 }
 
 .wp-modal__join-label {
-  font-family: "DM Sans", sans-serif;
+
   font-size: 0.8rem;
   color: #6b7280;
 }
 
 .wp-modal__join-value {
-  font-family: "DM Sans", sans-serif;
   font-size: 0.88rem;
   font-weight: 600;
   color: #12192c;
 }
 
 .wp-modal__join-code {
-  font-family: "Barlow Condensed", sans-serif;
   font-size: 1.1rem;
   letter-spacing: 0.1em;
   color: #a5004b;
 }
 
 .wp-modal__error {
-  font-family: "DM Sans", sans-serif;
   font-size: 0.82rem;
   color: #dc2626;
   margin: 8px 0 0;
