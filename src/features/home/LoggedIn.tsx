@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Countdown from '../../shared/components/Countdown'
 import { SecondaryButton } from '../../shared/components/Buttons';
 import Noticias from '../../shared/components/Noticias'
-import useSession  from "../../shared/hooks/useSession"
+import useSession from "../../shared/hooks/useSession"
 import { useProfile } from "../../shared/hooks/useProfile"
 
 function LoggedIn() {
@@ -11,7 +11,8 @@ function LoggedIn() {
     const session = useSession();
     const profile = useProfile();
     const name = profile?.nombre || session?.user?.user_metadata?.full_name.split(" ")[0];
-    const progreso = profile ? (profile.puntos / 2000) * 100 : 0;
+    const levelXP = 2000;
+    const progreso = profile ? ((profile.puntos % levelXP) / levelXP) * 100 : 0;
     const [category, setCategory] = useState<"var" | "fem" | null>(null);
     return (
         <>
@@ -36,19 +37,38 @@ function LoggedIn() {
 
                     <div className="flex items-center justify-between my-20 mx-5">
                         <img src="src\data\img\catLevel1.png" className="w-32" />
-                        <div>
-                        <p className="text-end px-2 pb-1 text-sm md:text-base font-sans ">{profile?.puntos} / {profile ? profile.nivel * 2000 : 0} XP </p>
-                        <div className="w-full bg-brand-gray-light rounded-md h-5">
-                            <div className="bg-yellow-400 h-5 rounded-md" style={{ width: `${progreso}%` }} />
-                        </div>
-                        <p className="pt-1 text-sm md:text-base font-sans">
-                            <span>Necesitas </span>
-                            <span className="text-brand-crimson">{profile ? 2000 - profile.puntos : 0} XP más </span>
-                            <span>para arreglar el Nivel {profile ? profile.nivel + 1 : 0}</span>
-                        </p>
+                        <div className="flex-1 mx-8">
+                            <p className="text-end px-2 pb-1 text-sm md:text-base font-sans">{profile?.puntos} / {profile ? profile.nivel * levelXP : 0} XP </p>
+                            <div className="w-full bg-brand-gray-light rounded-md h-5">
+                                <div className="bg-yellow-400 h-5 rounded-md" style={{ width: `${progreso}%` }} />
+                            </div>
+                            <p className="pt-1 text-sm md:text-base font-sans">
+                                <span>Necesitas </span>
+                                <span className="text-brand-crimson">{profile ? levelXP - (profile.puntos % levelXP) : 0} XP más </span>
+                                <span>para llegar al Nivel {profile ? profile.nivel + 1 : 0}</span>
+                            </p>
                         </div>
                         <img src="src\data\img\catLocked.png" className="w-26" />
                     </div>
+
+                    <div className="flex items-center justify-start gap-20 my-15 mx-15">
+                        <div>
+                            <p className="text-brand-navy text-3xl md:text-4xl font-bold">{profile?.puntos ?? 0}</p>
+                            <p className="text-sm text-brand-gray-mid font-sans">Puntos Totales</p>
+                        </div>
+
+                        <div>
+                            <p className="text-brand-navy text-3xl md:text-4xl font-bold">{profile?.logros ?? 0}</p>
+                            <p className="text-sm text-brand-gray-mid font-sans">Logros</p>
+                        </div>
+
+                        <div>
+                            <p className="text-brand-navy text-3xl md:text-4xl font-bold">{profile?.predicciones ?? 0}</p>
+                            <p className="text-sm text-brand-gray-mid font-sans">Predicciones Acertadas</p>
+                        </div>
+                    </div>
+
+
                 </div>
 
                 <div className="flex md:flex-row items-center justify-between mb-10">
@@ -62,7 +82,7 @@ function LoggedIn() {
                                 chess_queen
                             </span>
                         </div>
-                        <SecondaryButton onClick={() => navigate("/watchpartyhub")} size="sm">Ver más</SecondaryButton>
+                        <SecondaryButton onClick={() => navigate("/watchpartyHUB")} size="sm">Ver más</SecondaryButton>
                     </div>
                 </div>
                 <div className="flex justify-center my-15">
