@@ -5,10 +5,7 @@ import useSession  from "../shared/hooks/useSession"
 
 import { useUsuarioByName } from "../shared/hooks/useUsuario";
 import { useUsuarioLogros } from "../shared/hooks/useLogros";
-import { User } from "lucide-react";
 
-
-import { type Usuario } from "../lib/DummyAPI";
 
 
 const amigos = [

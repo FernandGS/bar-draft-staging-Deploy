@@ -1,4 +1,4 @@
-import { Ellipsis, Heart, Share } from "lucide-react";
+import {Heart, Share } from "lucide-react";
 
 const crimsonColor = "#B5174B";
 

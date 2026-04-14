@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route  } from "react-router-dom";
 import SportsApi from "./pages/SportsApi";
 import Layout from "./layouts/Layout";
 import Index from "./pages/Index";
@@ -10,7 +10,6 @@ import Perfil from "./pages/Perfil";
 import Ra from "./pages/ra"
 import Reels from "./pages/Reels"
 import Home from "./pages/Home";
-import Tienda from "./pages/Tienda"
 
 function App() {
   return (
