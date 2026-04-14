@@ -13,6 +13,7 @@ export type Logro = {
   descripcion: string;
   url_image: string;
   desbloqueado: boolean;
+  user_id: string;
 };
 
 
@@ -48,7 +49,8 @@ export async function fetchUsuarioByName(nombre: string): Promise<Usuario[]> {
 
 
 export async function fetchUsuarioLogros(id: string): Promise<Logro[]> {
-  console.log(supabaseUrl, "FROm fetchUsuarioByName but apikey ", supabaseAPIKey)
+  console.log(supabaseUrl, "FROm fetchUsuarioByName but apikey ", supabaseAPIKey);
+  
   const response = await fetch(
     `${supabaseUrl}/rest/v1/rpc/get_user_logros`,
     {
@@ -57,11 +59,34 @@ export async function fetchUsuarioLogros(id: string): Promise<Logro[]> {
         "Content-Type": "application/json",
         apikey: supabaseAPIKey,
       },
-      body: JSON.stringify({ "p_id": id })  
+      body: JSON.stringify({ "p_id": id }),
     }
   );
 
-  return handleResponse<Logro[]>(response, "No se pudo cargar los logros del usuario");
-}
+  const data = await handleResponse<Logro[]>(response, "No se pudo cargar los logros del usuario");
 
-// hacer la funcion de post
+  // agregamos el user id con el que fue llamado el endpoint
+  for (let i = 0; i < data.length; i++) {
+    (data[i] as any).user_id = id;
+  }
+
+  return data;
+}
+export async function updateUsuarioLogro(user_id: string, nuevo_logro: number): Promise<void> {
+  const response = await fetch(
+    `${supabaseUrl}/rest/v1/rpc/update_logro`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        apikey: supabaseAPIKey,
+      },
+      body: JSON.stringify(    {
+    user_id: user_id,
+    nuevo_logro: nuevo_logro
+    })
+    }
+  );
+  console.log("Response from updateUsuarioLogro: ", response);
+  return handleResponse<void>(response, "");
+}

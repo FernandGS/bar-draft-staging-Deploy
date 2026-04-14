@@ -6,6 +6,7 @@ type Logro = {
   descripcion: string;
   url_image: string;
   desbloqueado: boolean;
+  user_id: string;
 };
 
 type LogrosContainerProps = {

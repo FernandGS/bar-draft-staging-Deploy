@@ -28,14 +28,16 @@ const logrosHardcoded = [
     nombre: "Racha de 10 días",
     descripcion: "",
     desbloqueado: true,
-    url_image: "Nivel_1"
+    url_image: "Nivel_1",
+    user_id: "NA"
   },
   {
     logro_id: 2,
     nombre: "5 Predicciones",
     descripcion: "4/5 Correctas",
     desbloqueado: false,
-    url_image: "Nivel_1"
+    url_image: "Nivel_1",
+    user_id: "NA"
   },
 ];
 
