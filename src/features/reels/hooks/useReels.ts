@@ -24,7 +24,7 @@ export function useReels(userId: any) {
             user_video_actions(liked, user_id, watched)
           `)
           .eq('is_active', true)
-          .limit(5);
+          .limit(20);
           
 
           if (error) {

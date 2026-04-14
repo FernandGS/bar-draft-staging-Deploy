@@ -33,9 +33,9 @@ const ReelsActionBar = ({ video_id, liked, onLike }: ReelsActionBarProps) => {
       >
         <Share color={crimsonColor} />
       </button>
-      <button className="cursor-pointer h-7 w-7 flex items-center justify-center">
+      {/* <button className="cursor-pointer h-7 w-7 flex items-center justify-center">
         <Ellipsis color={crimsonColor} />
-      </button>
+      </button> */}
     </div>
   );
 };

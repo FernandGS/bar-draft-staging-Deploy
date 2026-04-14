@@ -25,7 +25,7 @@ const ReelsFeed = () => {
     const position = getPosition(i);
     if (position !== "hidden") return position;
     const diff = i - activeIndex;
-    return diff > activeIndex ? "hiddenRight" : "hiddenLeft";
+    return diff > 0 ? "hiddenRight" : "hiddenLeft";
   };
 
   type Key = "ArrowLeft" | "ArrowRight";
