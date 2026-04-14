@@ -25,14 +25,16 @@ const logrosHardcoded = [
     nombre: "Racha de 10 días",
     descripcion: "",
     desbloqueado: true,
-    url_image: "Nivel_1"
+    url_image: "Nivel_1",
+    user_id: "NA"
   },
   {
     logro_id: 2,
     nombre: "5 Predicciones",
     descripcion: "4/5 Correctas",
     desbloqueado: false,
-    url_image: "Nivel_1"
+    url_image: "Nivel_1",
+    user_id: "NA"
   },
 ];
 
@@ -63,7 +65,7 @@ function Perfil() {
             ranking={14}
             pais="Chile"
             avatarUrl={Usuario?.url_avatar || "https://i.pravatar.cc/150?img=3"}
-            onLogout={() => alert("Tu no mete cabra")}
+            onLogout={() => alert("Funcionalidad de cerrar sesion")}
             puntos={2400}
             logros={3}
             predicciones={4}
