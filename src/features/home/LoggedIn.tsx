@@ -84,7 +84,7 @@ function LoggedIn() {
                                 chess_queen
                             </span>
                         </div>
-                        <SecondaryButton onClick={() => navigate("/watchpartyHUB")} size="sm">Ver más</SecondaryButton>
+                        <SecondaryButton onClick={() => navigate("/watchPartyHUB")} size="sm">Ver más</SecondaryButton>
                     </div>
                 </div>
                 <div className="flex justify-center my-15">
