@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { supabase } from "../shared/services/supabaseClient";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
   const [session, setSession] = useState<Session | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     supabase.auth.getSession().then(async({ data: { session: s } }) => {
@@ -40,7 +42,7 @@ const Index = () => {
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}${window.location.pathname}`,
+        redirectTo: `${window.location.origin}/auth/callback`,
       },
     });
   };
@@ -48,6 +50,7 @@ const Index = () => {
   const signOut = async () => {
     await supabase.auth.signOut();
     setSession(null);
+    navigate("/", { replace: true });
   };
 
   return (
