@@ -35,7 +35,9 @@ export default function AuthCallback() {
 
   return (
     <div className="p-6 text-center">
-      <h1 className="text-2xl font-bold mb-2">Procesando inicio de sesión...</h1>
+      <h1 className="text-2xl font-bold mb-2">
+        Procesando inicio de sesión...
+      </h1>
       {error ? <p className="text-red-600">{error}</p> : <p>Redirigiendo...</p>}
     </div>
   );

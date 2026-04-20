@@ -8,7 +8,7 @@ const Index = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    supabase.auth.getSession().then(async({ data: { session: s } }) => {
+    supabase.auth.getSession().then(async ({ data: { session: s } }) => {
       setSession(s);
 
       if (s?.user) {
@@ -21,17 +21,18 @@ const Index = () => {
       }
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async(_event, nextSession) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (_event, nextSession) => {
       setSession(nextSession);
-      
+
       if (_event === "SIGNED_IN" && nextSession?.user) {
         const { id, email } = nextSession.user;
         const { error } = await supabase
           .from("profiles")
           .upsert({ id, email }, { onConflict: "id" });
-        
-      if (error) console.error("Error guardando perfil:", error.message);
-          
+
+        if (error) console.error("Error guardando perfil:", error.message);
       }
     });
 
