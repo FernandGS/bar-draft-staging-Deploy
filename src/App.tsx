@@ -7,16 +7,18 @@ import WatchParty from "./pages/WatchParty";
 import WatchPartyHUB from "./pages/WatchPartyHUB/pages/WatchPartyPage";
 import Wordle from "./pages/Wordle";
 import Perfil from "./pages/Perfil";
-import Ra from "./pages/ra"
-import Reels from "./pages/Reels"
+import Ra from "./pages/ra";
+import Reels from "./pages/Reels";
 import Home from "./pages/Home";
-import Tienda from "./pages/Tienda"
+import Tienda from "./pages/Tienda";
+import AuthCallback from "./pages/AuthCallback";
 
 function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
         <Route path="/login" element={<Index />} />
+        <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/" element={<Home />} />
         <Route path="/sportsapi" element={<SportsApi />} />
         <Route path="/chat" element={<Chat />} />

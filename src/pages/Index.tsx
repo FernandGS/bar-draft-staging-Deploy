@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { supabase } from "../shared/services/supabaseClient";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
   const [session, setSession] = useState<Session | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    supabase.auth.getSession().then(async({ data: { session: s } }) => {
+    supabase.auth.getSession().then(async ({ data: { session: s } }) => {
       setSession(s);
 
       if (s?.user) {
@@ -19,17 +21,18 @@ const Index = () => {
       }
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async(_event, nextSession) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (_event, nextSession) => {
       setSession(nextSession);
-      
+
       if (_event === "SIGNED_IN" && nextSession?.user) {
         const { id, email } = nextSession.user;
         const { error } = await supabase
           .from("profiles")
           .upsert({ id, email }, { onConflict: "id" });
-        
-      if (error) console.error("Error guardando perfil:", error.message);
-          
+
+        if (error) console.error("Error guardando perfil:", error.message);
       }
     });
 
@@ -40,7 +43,7 @@ const Index = () => {
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}${window.location.pathname}`,
+        redirectTo: `${window.location.origin}/auth/callback`,
       },
     });
   };
@@ -48,6 +51,7 @@ const Index = () => {
   const signOut = async () => {
     await supabase.auth.signOut();
     setSession(null);
+    navigate("/", { replace: true });
   };
 
   return (
